@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  app:
+    container_name: bun_backend_dev
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - .:/usr/src
+      - /usr/src/node_modules
+      - /usr/src/mysql_data
+    ports:
+      - '5000:5000'
+    networks:
+      - dev_backend_dev
+
+  mysql:
+    container_name: mysql_backend_dev
+    ports:
+      - '3306:3306'
+    env_file:
+      - .env
+    image: mysql:5.7
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - dev_backend_dev
+
+networks:
+  dev_backend_dev:
+    name: dev_backend_dev
+    driver: bridge
