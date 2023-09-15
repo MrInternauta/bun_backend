@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import { config, schema } from '../config/config';
 
 export default class Server {
   private static _instance: Server;
@@ -18,8 +19,20 @@ export default class Server {
   }
 
   public start() {
-    this.httpServer.listen(this.port, () => {
-      console.log('Escuchando en el puerto ' + this.port);
-    });
+    this.validate()
+      .then(res => {
+        this.port = res.SERVER_PORT;
+        console.log(res);
+        this.httpServer.listen(this.port, () => {
+          console.log('Escuchando en el puerto ' + this.port);
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  private async validate() {
+    return schema.validateAsync(config);
   }
 }

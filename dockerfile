@@ -10,4 +10,6 @@ COPY [".", "/usr/src/"]
 
 EXPOSE 5000
 
+RUN bun install
+
 CMD bun dev
