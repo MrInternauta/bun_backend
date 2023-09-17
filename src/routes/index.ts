@@ -1,15 +1,24 @@
 import express, { Router, Request, Response } from 'express';
+import usersRoutes from './User';
+import postsRoutes from './Post';
+
+import { Auth } from '../classes/Auth';
 
 const app = express();
 const router: Router = Router();
+const auth: Auth = new Auth();
 
-const HOME = router.get('/', (req: Request, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     code: 200,
-    message: 'Hello world from docker compose!',
+    message: 'Hello world from bun!',
   });
 });
 
-app.use(HOME);
+router.post('/login', auth.login);
+
+app.use(router);
+app.use(usersRoutes);
+app.use(postsRoutes);
 
 export default app;
