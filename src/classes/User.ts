@@ -10,9 +10,10 @@ export class User {
       const { take, skip } = req.query;
       const users = await Database?.prismaDB?.user.findMany({
         orderBy: { createdAt: 'desc' },
-        skip: take && typeof take == 'number' ? take : 10,
-        take: skip && typeof skip == 'number' ? skip : 0,
+        take: take && typeof take == 'number' ? take : 10,
+        skip: skip && typeof skip == 'number' ? skip : 0,
       });
+
       return res.status(StatusCodes.OK).json(users);
     } catch (error) {
       //console.log(error);

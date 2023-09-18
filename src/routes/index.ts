@@ -3,15 +3,15 @@ import usersRoutes from './User';
 import postsRoutes from './Post';
 
 import { Auth } from '../classes/Auth';
+import { StatusCodes } from '../helpers/StatusCodes';
 
 const app = express();
 const router: Router = Router();
 const auth: Auth = new Auth();
 
 router.get('/', (req: Request, res: Response) => {
-  res.status(200).json({
-    code: 200,
-    message: 'Hello world from bun!',
+  res.status(StatusCodes.OK).json({
+    message: 'Hello world from twitter!',
   });
 });
 
